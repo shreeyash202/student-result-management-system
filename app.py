@@ -12,8 +12,22 @@ from controllers.marks_controller import MarksController
 from models.student import get_db_connection
 from models.result import ResultModel
 
+import sqlite3
 
 app = Flask(__name__)
+def initialize_database():
+
+    conn = sqlite3.connect('student_result.db')
+
+    cursor = conn.cursor()
+
+    with open('database/schema.sql', 'r') as f:
+        cursor.executescript(f.read())
+
+    conn.commit()
+    conn.close()
+
+initialize_database()
 
 app.secret_key = "srms_secret_key"
 
