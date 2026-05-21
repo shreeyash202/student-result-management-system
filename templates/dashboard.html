@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      rel="stylesheet">
+
+<style>
+
+body{
+    background:#f1f5f9;
+}
+
+.sidebar{
+    width:260px;
+    height:100vh;
+    position:fixed;
+    background:#0f172a;
+    color:white;
+    padding:25px;
+}
+
+.sidebar h3{
+    font-weight:bold;
+}
+
+.sidebar a{
+    display:block;
+    color:#cbd5e1;
+    text-decoration:none;
+    padding:12px;
+    margin-top:10px;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.sidebar a:hover{
+    background:#1e293b;
+    color:white;
+}
+
+.main{
+    margin-left:280px;
+    padding:30px;
+}
+
+.card{
+    border:none;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+}
+
+.stat-card{
+    color:white;
+    border-radius:20px;
+}
+
+.bg-blue{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+}
+
+.bg-green{
+    background:linear-gradient(135deg,#059669,#047857);
+}
+
+.bg-dark2{
+    background:linear-gradient(135deg,#0f172a,#1e293b);
+}
+
+.table{
+    border-radius:15px;
+    overflow:hidden;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="sidebar">
+
+    <h3 class="mb-4">
+        SRMS Admin
+    </h3>
+
+    <a href="#">
+        <i class="fa fa-chart-line me-2"></i>
+        Dashboard
+    </a>
+
+    <a href="#">
+        <i class="fa fa-users me-2"></i>
+        Students
+    </a>
+
+    <a href="#">
+        <i class="fa fa-file-upload me-2"></i>
+        Uploads
+    </a>
+
+    <a href="/logout">
+        <i class="fa fa-right-from-bracket me-2"></i>
+        Logout
+    </a>
+
+</div>
+
+<div class="main">
+
+    <h2 class="fw-bold mb-4">
+        Dashboard Overview
+    </h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+            <div class="alert alert-info">
+
+                {{ messages[0] }}
+
+            </div>
+
+        {% endif %}
+    {% endwith %}
+
+    <!-- STATS -->
+
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="card stat-card bg-blue p-4">
+
+                <h5>Total Students</h5>
+
+                <h1>
+                    {{ students|length }}
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card stat-card bg-green p-4">
+
+                <h5>Active Records</h5>
+
+                <h1>
+                    {{ students|length }}
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card stat-card bg-dark2 p-4">
+
+                <h5>System Status</h5>
+
+                <h1>
+                    Online
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <!-- LEFT -->
+
+        <div class="col-md-4">
+
+            <!-- ADD STUDENT -->
+
+            <div class="card p-4 mb-4">
+
+                <h5 class="fw-bold mb-3">
+                    Add Student
+                </h5>
+
+                <form action="/admin/add_student"
+                      method="POST">
+
+                    <input type="text"
+                           name="student_id"
+                           class="form-control mb-3"
+                           placeholder="Student ID"
+                           required>
+
+                    <input type="text"
+                           name="name"
+                           class="form-control mb-3"
+                           placeholder="Student Name"
+                           required>
+
+                    <input type="text"
+                           name="course"
+                           class="form-control mb-3"
+                           placeholder="Course"
+                           required>
+
+                    <input type="text"
+                           name="semester"
+                           class="form-control mb-3"
+                           placeholder="Semester"
+                           required>
+
+                    <input type="password"
+                           name="password"
+                           class="form-control mb-3"
+                           placeholder="Password"
+                           required>
+
+                    <button class="btn btn-primary w-100">
+                        Add Student
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- BULK STUDENT -->
+
+            <div class="card p-4 mb-4">
+
+                <h5 class="fw-bold mb-3">
+                    Upload Students CSV
+                </h5>
+
+                <form action="/admin/bulk_upload"
+                      method="POST"
+                      enctype="multipart/form-data">
+
+                    <input type="file"
+                           name="csv_file"
+                           class="form-control mb-3"
+                           accept=".csv"
+                           required>
+
+                    <button class="btn btn-success w-100">
+
+                        Upload Students
+
+                    </button>
+
+                </form>
+
+            </div>
+
+            <!-- BULK MARKS -->
+
+            <div class="card p-4">
+
+                <h5 class="fw-bold mb-3">
+                    Upload Marks CSV
+                </h5>
+
+                <form action="/admin/bulk_upload_marks"
+                      method="POST"
+                      enctype="multipart/form-data">
+
+                    <input type="file"
+                           name="csv_file"
+                           class="form-control mb-3"
+                           accept=".csv"
+                           required>
+
+                    <button class="btn btn-dark w-100">
+
+                        Upload Marks
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="col-md-8">
+
+            <div class="card p-4">
+
+                <h5 class="fw-bold mb-3">
+                    Student Records
+                </h5>
+
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead class="table-dark">
+
+                            <tr>
+
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Course</th>
+                                <th>Semester</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for s in students %}
+
+                            <tr>
+
+                                <td>
+                                    <span class="badge bg-primary">
+                                        {{ s.StudentID }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    {{ s.Name }}
+                                </td>
+
+                                <td>
+                                    {{ s.Course }}
+                                </td>
+
+                                <td>
+                                    {{ s.Semester }}
+                                </td>
+
+                                <td>
+
+                                    <a href="/admin/enter_marks/{{ s.StudentID }}"
+                                       class="btn btn-sm btn-primary">
+
+                                        Marks
+
+                                    </a>
+
+                                    <a href="/admin/delete_student/{{ s.StudentID }}"
+                                       class="btn btn-sm btn-danger">
+
+                                        Delete
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
