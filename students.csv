@@ -1,4 +1,4 @@
-StudentID,Name,Course,Semester,Password
+student_id,name,course,semester,password
 24co01,ABHISHEK ANIL KALANGUTKAR,BE Comp Engg,4,pass01
 24co02,ABUBAKAR H BAWA,BE Comp Engg,4,pass02
 24co03,ANAY RANJAN GOVEKAR,BE Comp Engg,4,pass03
