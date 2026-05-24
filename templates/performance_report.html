@@ -2,99 +2,282 @@
 <html lang="en">
 
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta charset="UTF-8">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>Performance Report</title>
+<title>Performance Report</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      rel="stylesheet">
+
+<style>
+
+body{
+    background:linear-gradient(135deg,#0f172a,#1e3a8a);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:30px;
+}
+
+.report-card{
+    width:850px;
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 35px rgba(0,0,0,0.3);
+}
+
+.top-section{
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    padding:30px;
+    text-align:center;
+}
+
+.metric{
+    border-radius:15px;
+    padding:20px;
+    background:#f8fafc;
+    text-align:center;
+}
+
+.subject-table th{
+    background:#1e293b;
+    color:white;
+}
+
+</style>
 
 </head>
 
 <body>
 
-<div class="container py-5">
+<div class="card report-card">
 
-    <div class="card p-4">
+    <div class="top-section">
 
-        <h1 class="text-center text-success fw-bold mb-4">
+        <i class="fa-solid fa-user-graduate fa-3x mb-3"></i>
+
+        <h2 class="fw-bold">
             Student Performance Report
-        </h1>
+        </h2>
 
-        <div class="table-responsive">
+    </div>
 
-            <table class="table table-bordered table-striped">
+    <div class="card-body p-5">
 
-                <tr>
-                    <th>Student ID</th>
-                    <td>{{ result.StudentID }}</td>
-                </tr>
+        <!-- STUDENT DETAILS -->
 
-                <tr>
-                    <th>Name</th>
-                    <td>{{ result.Name }}</td>
-                </tr>
+        <div class="row mb-4">
 
-                <tr>
-                    <th>Course</th>
-                    <td>{{ result.Course }}</td>
-                </tr>
+            <div class="col-md-6">
 
-                <tr>
-                    <th>Semester</th>
-                    <td>{{ result.Semester }}</td>
-                </tr>
+                <h6 class="text-muted">
+                    Student Name
+                </h6>
 
-                <tr>
-                    <th>Maths</th>
-                    <td>{{ result.Maths }}</td>
-                </tr>
+                <h5>
+                    {{ res.Name }}
+                </h5>
 
-                <tr>
-                    <th>DBMS</th>
-                    <td>{{ result.DBMS }}</td>
-                </tr>
+            </div>
 
-                <tr>
-                    <th>Python</th>
-                    <td>{{ result.Python }}</td>
-                </tr>
+            <div class="col-md-6">
 
-                <tr>
-                    <th>OS</th>
-                    <td>{{ result.OS }}</td>
-                </tr>
+                <h6 class="text-muted">
+                    Student ID
+                </h6>
 
-                <tr>
-                    <th>Java</th>
-                    <td>{{ result.Java }}</td>
-                </tr>
+                <h5>
+                    {{ res.StudentID }}
+                </h5>
 
-                <tr class="table-primary">
-                    <th>Total</th>
-                    <td>{{ result.Total }}</td>
-                </tr>
+            </div>
 
-                <tr class="table-info">
-                    <th>Percentage</th>
-                    <td>{{ result.Percentage }}%</td>
-                </tr>
+        </div>
 
-                <tr class="table-success">
-                    <th>Grade</th>
-                    <td>{{ result.Grade }}</td>
-                </tr>
+        <div class="row mb-5">
 
-                <tr class="table-warning">
-                    <th>Status</th>
-                    <td>{{ result.Status }}</td>
-                </tr>
+            <div class="col-md-6">
+
+                <h6 class="text-muted">
+                    Course
+                </h6>
+
+                <h5>
+                    {{ res.Course }}
+                </h5>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <h6 class="text-muted">
+                    Semester
+                </h6>
+
+                <h5>
+                    {{ res.Semester }}
+                </h5>
+
+            </div>
+
+        </div>
+
+        <!-- SUBJECT MARKS -->
+
+        <h4 class="fw-bold mb-3">
+            Subject-wise Marks
+        </h4>
+
+        <div class="table-responsive mb-5">
+
+            <table class="table table-bordered subject-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>Subject</th>
+                        <th>Marks</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Maths</td>
+                        <td>{{ res.Maths }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>DBMS</td>
+                        <td>{{ res.DBMS }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Python</td>
+                        <td>{{ res.Python }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Operating Systems</td>
+                        <td>{{ res.OS }}</td>
+                    </tr>
+
+                    <tr>
+                        <td>Java</td>
+                        <td>{{ res.Java }}</td>
+                    </tr>
+
+                </tbody>
 
             </table>
+
+        </div>
+
+        <!-- FINAL RESULT -->
+
+        <div class="row text-center g-3">
+
+            <div class="col-md-4">
+
+                <div class="metric">
+
+                    <h6>Total Marks</h6>
+
+                    <h1 class="fw-bold text-primary">
+
+                        {{ res.Total }}
+
+                    </h1>
+
+                    <small>/500</small>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="metric">
+
+                    <h6>Percentage</h6>
+
+                    <h1 class="fw-bold text-success">
+
+                        {{ res.Percentage }}%
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="metric">
+
+                    <h6>Grade</h6>
+
+                    <h1 class="fw-bold text-danger">
+
+                        {{ res.Grade }}
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- STATUS -->
+
+        <div class="text-center mt-5">
+
+            {% if res.Status == 'Pass' %}
+
+                <span class="badge bg-success px-5 py-3 fs-5">
+
+                    PASS
+
+                </span>
+
+            {% else %}
+
+                <span class="badge bg-danger px-5 py-3 fs-5">
+
+                    FAIL
+
+                </span>
+
+            {% endif %}
+
+        </div>
+
+        <!-- LOGOUT -->
+
+        <div class="text-center mt-4">
+
+            <a href="/logout"
+               class="btn btn-dark px-4">
+
+                Logout
+
+            </a>
 
         </div>
 
@@ -103,4 +286,5 @@
 </div>
 
 </body>
+
 </html>
